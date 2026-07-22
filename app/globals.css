@@ -1,26 +1,198 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   JavaChip Design Tokens
+   A rainy café / dark academia palette. Amber and gold are reserved for
+   emphasis (active states, progress, focus) — never used as the base of
+   large surfaces.
+   ========================================================================== */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Core palette */
+  --espresso-brown: #241914;
+  --dark-roast: #35251f;
+  --deep-walnut: #463229;
+  --cafe-wood: #574036;
+  --rainy-slate: #46535b;
+  --storm-blue: #53616a;
+  --parchment: #e8dcc7;
+  --warm-cream: #f4ebdd;
+  --latte-beige: #c5a98c;
+  --amber-glow: #d99445;
+  --soft-gold: #d7b16b;
+  --muted-sage: #788276;
+  --deep-burgundy: #653f3b;
+
+  /* Semantic surface tokens — dark study-room theme (default) */
+  --background: var(--espresso-brown);
+  --background-raised: var(--dark-roast);
+  --background-card: var(--deep-walnut);
+  --surface-border: color-mix(in srgb, var(--latte-beige) 22%, transparent);
+  --foreground: var(--warm-cream);
+  --foreground-muted: var(--latte-beige);
+  --accent: var(--amber-glow);
+  --accent-soft: var(--soft-gold);
+  --accent-foreground: var(--espresso-brown);
+  --surface-nav: var(--dark-roast);
+  --surface-code: #1c1410;
+  --danger: #c9695f;
+  --success: var(--muted-sage);
+
+  --font-display: var(--font-cormorant);
+  --font-body: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+:root[data-theme="light"] {
+  --background: var(--warm-cream);
+  --background-raised: var(--parchment);
+  --background-card: #fffaf1;
+  --surface-border: color-mix(in srgb, var(--cafe-wood) 18%, transparent);
+  --foreground: var(--espresso-brown);
+  --foreground-muted: var(--cafe-wood);
+  --accent: #b96f22;
+  --accent-soft: var(--soft-gold);
+  --accent-foreground: var(--warm-cream);
+  --surface-nav: var(--parchment);
+  --surface-code: #f1e6d2;
+}
+
+:root[data-contrast="high"] {
+  --surface-border: color-mix(in srgb, var(--foreground) 55%, transparent);
+  --foreground-muted: var(--foreground);
 }
 
 @theme inline {
+  --color-espresso: var(--espresso-brown);
+  --color-dark-roast: var(--dark-roast);
+  --color-walnut: var(--deep-walnut);
+  --color-cafe-wood: var(--cafe-wood);
+  --color-rainy-slate: var(--rainy-slate);
+  --color-storm-blue: var(--storm-blue);
+  --color-parchment: var(--parchment);
+  --color-warm-cream: var(--warm-cream);
+  --color-latte: var(--latte-beige);
+  --color-amber: var(--amber-glow);
+  --color-gold: var(--soft-gold);
+  --color-sage: var(--muted-sage);
+  --color-burgundy: var(--deep-burgundy);
+
   --color-background: var(--background);
+  --color-background-raised: var(--background-raised);
+  --color-background-card: var(--background-card);
+  --color-border: var(--surface-border);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-surface-nav: var(--surface-nav);
+  --color-surface-code: var(--surface-code);
+  --color-danger: var(--danger);
+  --color-success: var(--success);
+
+  --font-display: var(--font-display);
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --background: var(--warm-cream);
+    --background-raised: var(--parchment);
+    --background-card: #fffaf1;
+    --surface-border: color-mix(in srgb, var(--cafe-wood) 18%, transparent);
+    --foreground: var(--espresso-brown);
+    --foreground-muted: var(--cafe-wood);
+    --accent: #b96f22;
+    --accent-foreground: var(--warm-cream);
+    --surface-nav: var(--parchment);
+    --surface-code: #f1e6d2;
   }
+}
+
+* {
+  border-color: var(--surface-border);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Rain / atmosphere layer — decorative only, hidden from assistive tech,
+   and disabled entirely when the user prefers reduced motion. */
+.rain-layer {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.rain-drop {
+  position: absolute;
+  top: -10%;
+  width: 1px;
+  height: 8rem;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    color-mix(in srgb, var(--soft-gold) 35%, transparent)
+  );
+  animation: rain-fall linear infinite;
+}
+
+@keyframes rain-fall {
+  to {
+    transform: translateY(120vh);
+  }
+}
+
+.lamp-glow {
+  background: radial-gradient(
+    circle at 50% 20%,
+    color-mix(in srgb, var(--amber-glow) 22%, transparent),
+    transparent 60%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .rain-layer {
+    display: none;
+  }
+}
+
+[data-reduced-motion="true"] .rain-layer,
+[data-reduced-motion="true"] .lamp-glow {
+  display: none;
+}
+
+/* Scrollbar — kept subtle and on-theme */
+* {
+  scrollbar-color: var(--latte-beige) transparent;
+  scrollbar-width: thin;
 }
