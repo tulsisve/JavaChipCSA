@@ -456,26 +456,40 @@ export type Database = {
       student_lesson_progress: TableDef<StudentLessonProgressRow, Auto>;
       student_syntax_attempts: TableDef<StudentSyntaxAttemptRow, "id" | "attempted_at">;
       student_mcq_attempts: TableDef<StudentMcqAttemptRow, "id" | "attempted_at">;
-      student_frq_submissions: TableDef<StudentFrqSubmissionRow, Auto>;
+      student_frq_submissions: TableDef<
+        StudentFrqSubmissionRow,
+        Auto | "assignment_id" | "code" | "planning_notes" | "reflection" | "automated_score" | "teacher_score" | "status" | "submitted_at"
+      >;
       student_mastery: TableDef<StudentMasteryRow, Auto>;
       student_bookmarks: TableDef<StudentBookmarkRow, "id" | "created_at">;
       student_notes: TableDef<StudentNoteRow, Auto>;
       study_plans: TableDef<StudyPlanRow, Auto>;
       study_sessions: TableDef<StudySessionRow, Auto>;
-      classes: TableDef<ClassRow, Auto>;
-      class_members: TableDef<ClassMemberRow, Auto>;
-      class_announcements: TableDef<ClassAnnouncementRow, Auto>;
-      assignments: TableDef<AssignmentRow, Auto>;
+      classes: TableDef<ClassRow, Auto | "school_name" | "join_code_expires_at" | "archived_at">;
+      class_members: TableDef<ClassMemberRow, Auto | "status">;
+      class_announcements: TableDef<ClassAnnouncementRow, Auto | "published_at" | "expires_at" | "pinned">;
+      assignments: TableDef<
+        AssignmentRow,
+        Auto | "instructions" | "available_at" | "due_at" | "time_limit_minutes" | "attempt_limit" | "allow_late" | "feedback_release_at" | "explanation_release_at" | "published"
+      >;
       assignment_items: TableDef<AssignmentItemRow, "id" | "created_at">;
-      assignment_submissions: TableDef<AssignmentSubmissionRow, Auto>;
-      teacher_feedback: TableDef<TeacherFeedbackRow, Auto>;
+      assignment_submissions: TableDef<
+        AssignmentSubmissionRow,
+        Auto | "score" | "teacher_score" | "attempt_number" | "started_at" | "submitted_at" | "graded_at" | "status"
+      >;
+      teacher_feedback: TableDef<TeacherFeedbackRow, Auto | "feedback" | "rubric_feedback">;
       badges: TableDef<BadgeRow, Auto>;
       student_badges: TableDef<StudentBadgeRow, "id" | "earned_at">;
       reports: TableDef<ReportRow, Auto>;
       audit_logs: TableDef<AuditLogRow, "id" | "created_at">;
     };
     Views: Record<string, never>;
-    Functions: Record<string, never>;
+    Functions: {
+      join_class: {
+        Args: { class_join_code: string };
+        Returns: string;
+      };
+    };
     Enums: Record<string, never>;
     CompositeTypes: Record<string, never>;
   };
