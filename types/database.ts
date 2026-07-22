@@ -2,6 +2,14 @@
 // When the schema changes, prefer regenerating via:
 //   npx supabase gen types typescript --project-id <id> > types/database.ts
 // and re-applying the ergonomic aliases exported at the bottom of this file.
+//
+// IMPORTANT: every Row type below is a `type` alias, never an `interface`.
+// With the installed @supabase/postgrest-js (2.110.8), a Row declared as an
+// `interface` fails structural constraint checking against postgrest-js's
+// internal `GenericSchema` (Schema silently falls back to `any`/`never`
+// instead of erroring loudly), so every .select() on that table resolves to
+// `never` — even a plain `.select("*")`. Type aliases satisfy the same
+// constraint correctly. Keep it that way when adding tables.
 
 export type UserRole = "student" | "teacher" | "admin";
 export type ThemePreference = "light" | "dark" | "system";
@@ -33,12 +41,12 @@ export type StudyPlanType =
 export type StudySessionStatus = "scheduled" | "completed" | "skipped" | "rescheduled";
 export type ReportStatus = "open" | "reviewing" | "resolved" | "dismissed";
 
-interface Timestamps {
+type Timestamps = {
   created_at: string;
   updated_at: string;
 }
 
-export interface ProfileRow extends Timestamps {
+export type ProfileRow = Timestamps & {
   id: string;
   role: UserRole;
   display_name: string;
@@ -50,7 +58,7 @@ export interface ProfileRow extends Timestamps {
   suspended_at: string | null;
 }
 
-export interface UserPreferencesRow extends Timestamps {
+export type UserPreferencesRow = Timestamps & {
   id: string;
   user_id: string;
   theme: ThemePreference;
@@ -62,7 +70,7 @@ export interface UserPreferencesRow extends Timestamps {
   notification_preferences: Record<string, boolean>;
 }
 
-export interface TeacherSubscriptionRow extends Timestamps {
+export type TeacherSubscriptionRow = Timestamps & {
   id: string;
   teacher_id: string;
   stripe_customer_id: string | null;
@@ -74,7 +82,7 @@ export interface TeacherSubscriptionRow extends Timestamps {
   cancel_at_period_end: boolean;
 }
 
-export interface CourseRow extends Timestamps {
+export type CourseRow = Timestamps & {
   id: string;
   title: string;
   description: string;
@@ -82,7 +90,7 @@ export interface CourseRow extends Timestamps {
   published: boolean;
 }
 
-export interface UnitRow extends Timestamps {
+export type UnitRow = Timestamps & {
   id: string;
   course_id: string;
   unit_number: number;
@@ -94,7 +102,7 @@ export interface UnitRow extends Timestamps {
   published: boolean;
 }
 
-export interface LessonRow extends Timestamps {
+export type LessonRow = Timestamps & {
   id: string;
   unit_id: string;
   title: string;
@@ -105,7 +113,7 @@ export interface LessonRow extends Timestamps {
   published: boolean;
 }
 
-export interface LessonSectionRow extends Timestamps {
+export type LessonSectionRow = Timestamps & {
   id: string;
   lesson_id: string;
   section_type: string;
@@ -114,7 +122,7 @@ export interface LessonSectionRow extends Timestamps {
   sort_order: number;
 }
 
-export interface VocabularyTermRow extends Timestamps {
+export type VocabularyTermRow = Timestamps & {
   id: string;
   unit_id: string | null;
   lesson_id: string | null;
@@ -123,7 +131,7 @@ export interface VocabularyTermRow extends Timestamps {
   example: string | null;
 }
 
-export interface SyntaxTemplateRow extends Timestamps {
+export type SyntaxTemplateRow = Timestamps & {
   id: string;
   unit_id: string | null;
   topic: string;
@@ -135,7 +143,7 @@ export interface SyntaxTemplateRow extends Timestamps {
   difficulty: DifficultyLevel;
 }
 
-export interface SyntaxQuestionRow extends Timestamps {
+export type SyntaxQuestionRow = Timestamps & {
   id: string;
   unit_id: string | null;
   lesson_id: string | null;
@@ -148,7 +156,7 @@ export interface SyntaxQuestionRow extends Timestamps {
   difficulty: DifficultyLevel;
 }
 
-export interface McqQuestionRow extends Timestamps {
+export type McqQuestionRow = Timestamps & {
   id: string;
   unit_id: string | null;
   lesson_id: string | null;
@@ -164,7 +172,7 @@ export interface McqQuestionRow extends Timestamps {
   published: boolean;
 }
 
-export interface McqChoiceRow extends Timestamps {
+export type McqChoiceRow = Timestamps & {
   id: string;
   question_id: string;
   choice_label: string;
@@ -174,7 +182,7 @@ export interface McqChoiceRow extends Timestamps {
   sort_order: number;
 }
 
-export interface FrqQuestionRow extends Timestamps {
+export type FrqQuestionRow = Timestamps & {
   id: string;
   unit_id: string | null;
   title: string;
@@ -186,7 +194,7 @@ export interface FrqQuestionRow extends Timestamps {
   published: boolean;
 }
 
-export interface FrqRubricItemRow extends Timestamps {
+export type FrqRubricItemRow = Timestamps & {
   id: string;
   frq_id: string;
   description: string;
@@ -194,7 +202,7 @@ export interface FrqRubricItemRow extends Timestamps {
   sort_order: number;
 }
 
-export interface FrqTestCaseRow extends Timestamps {
+export type FrqTestCaseRow = Timestamps & {
   id: string;
   frq_id: string;
   input_data: string;
@@ -203,7 +211,7 @@ export interface FrqTestCaseRow extends Timestamps {
   sort_order: number;
 }
 
-export interface StudentLessonProgressRow extends Timestamps {
+export type StudentLessonProgressRow = Timestamps & {
   id: string;
   student_id: string;
   lesson_id: string;
@@ -213,7 +221,7 @@ export interface StudentLessonProgressRow extends Timestamps {
   last_viewed_at: string | null;
 }
 
-export interface StudentSyntaxAttemptRow {
+export type StudentSyntaxAttemptRow = {
   id: string;
   student_id: string;
   question_id: string;
@@ -226,7 +234,7 @@ export interface StudentSyntaxAttemptRow {
   attempted_at: string;
 }
 
-export interface StudentMcqAttemptRow {
+export type StudentMcqAttemptRow = {
   id: string;
   student_id: string;
   question_id: string;
@@ -238,7 +246,7 @@ export interface StudentMcqAttemptRow {
   attempted_at: string;
 }
 
-export interface StudentFrqSubmissionRow extends Timestamps {
+export type StudentFrqSubmissionRow = Timestamps & {
   id: string;
   student_id: string;
   frq_id: string;
@@ -252,7 +260,7 @@ export interface StudentFrqSubmissionRow extends Timestamps {
   submitted_at: string | null;
 }
 
-export interface StudentMasteryRow extends Timestamps {
+export type StudentMasteryRow = Timestamps & {
   id: string;
   student_id: string;
   unit_id: string | null;
@@ -264,7 +272,7 @@ export interface StudentMasteryRow extends Timestamps {
   next_review_at: string | null;
 }
 
-export interface StudentBookmarkRow {
+export type StudentBookmarkRow = {
   id: string;
   student_id: string;
   content_type: BookmarkContentType;
@@ -273,7 +281,7 @@ export interface StudentBookmarkRow {
   created_at: string;
 }
 
-export interface StudentNoteRow extends Timestamps {
+export type StudentNoteRow = Timestamps & {
   id: string;
   student_id: string;
   content_type: BookmarkContentType;
@@ -281,7 +289,7 @@ export interface StudentNoteRow extends Timestamps {
   note: string;
 }
 
-export interface StudyPlanRow extends Timestamps {
+export type StudyPlanRow = Timestamps & {
   id: string;
   student_id: string;
   exam_date: string | null;
@@ -291,7 +299,7 @@ export interface StudyPlanRow extends Timestamps {
   plan_type: StudyPlanType;
 }
 
-export interface StudySessionRow extends Timestamps {
+export type StudySessionRow = Timestamps & {
   id: string;
   study_plan_id: string;
   student_id: string;
@@ -302,7 +310,7 @@ export interface StudySessionRow extends Timestamps {
   completed_at: string | null;
 }
 
-export interface ClassRow extends Timestamps {
+export type ClassRow = Timestamps & {
   id: string;
   teacher_id: string;
   name: string;
@@ -316,7 +324,7 @@ export interface ClassRow extends Timestamps {
   archived_at: string | null;
 }
 
-export interface ClassMemberRow extends Timestamps {
+export type ClassMemberRow = Timestamps & {
   id: string;
   class_id: string;
   student_id: string;
@@ -324,7 +332,7 @@ export interface ClassMemberRow extends Timestamps {
   status: ClassMemberStatus;
 }
 
-export interface ClassAnnouncementRow extends Timestamps {
+export type ClassAnnouncementRow = Timestamps & {
   id: string;
   class_id: string;
   teacher_id: string;
@@ -335,7 +343,7 @@ export interface ClassAnnouncementRow extends Timestamps {
   pinned: boolean;
 }
 
-export interface AssignmentRow extends Timestamps {
+export type AssignmentRow = Timestamps & {
   id: string;
   class_id: string;
   teacher_id: string;
@@ -351,7 +359,7 @@ export interface AssignmentRow extends Timestamps {
   published: boolean;
 }
 
-export interface AssignmentItemRow {
+export type AssignmentItemRow = {
   id: string;
   assignment_id: string;
   content_type: AssignmentContentType;
@@ -361,7 +369,7 @@ export interface AssignmentItemRow {
   created_at: string;
 }
 
-export interface AssignmentSubmissionRow extends Timestamps {
+export type AssignmentSubmissionRow = Timestamps & {
   id: string;
   assignment_id: string;
   student_id: string;
@@ -374,7 +382,7 @@ export interface AssignmentSubmissionRow extends Timestamps {
   graded_at: string | null;
 }
 
-export interface TeacherFeedbackRow extends Timestamps {
+export type TeacherFeedbackRow = Timestamps & {
   id: string;
   submission_id: string;
   teacher_id: string;
@@ -382,7 +390,7 @@ export interface TeacherFeedbackRow extends Timestamps {
   rubric_feedback: unknown[];
 }
 
-export interface BadgeRow extends Timestamps {
+export type BadgeRow = Timestamps & {
   id: string;
   name: string;
   description: string;
@@ -391,14 +399,14 @@ export interface BadgeRow extends Timestamps {
   requirement_value: number;
 }
 
-export interface StudentBadgeRow {
+export type StudentBadgeRow = {
   id: string;
   student_id: string;
   badge_id: string;
   earned_at: string;
 }
 
-export interface ReportRow extends Timestamps {
+export type ReportRow = Timestamps & {
   id: string;
   reporter_id: string;
   content_type: string;
@@ -408,7 +416,7 @@ export interface ReportRow extends Timestamps {
   reviewed_by: string | null;
 }
 
-export interface AuditLogRow {
+export type AuditLogRow = {
   id: string;
   actor_id: string | null;
   action: string;
@@ -422,11 +430,12 @@ type TableDef<Row, InsertOmit extends keyof Row = never> = {
   Row: Row;
   Insert: Omit<Row, InsertOmit> & Partial<Pick<Row, InsertOmit>>;
   Update: Partial<Row>;
+  Relationships: [];
 };
 
 type Auto = "id" | "created_at" | "updated_at";
 
-export interface Database {
+export type Database = {
   public: {
     Tables: {
       profiles: TableDef<ProfileRow, "created_at" | "updated_at" | "suspended_at">;
@@ -465,5 +474,9 @@ export interface Database {
       reports: TableDef<ReportRow, Auto>;
       audit_logs: TableDef<AuditLogRow, "id" | "created_at">;
     };
+    Views: Record<string, never>;
+    Functions: Record<string, never>;
+    Enums: Record<string, never>;
+    CompositeTypes: Record<string, never>;
   };
 }

@@ -59,7 +59,7 @@ export async function updateSession(request: NextRequest) {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("role, suspended_at")
+    .select("*")
     .eq("id", user.id)
     .single();
 

@@ -85,7 +85,7 @@ export async function loginAction(_prev: ActionState, formData: FormData): Promi
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("role, suspended_at")
+    .select("*")
     .eq("id", data.user.id)
     .single();
 
