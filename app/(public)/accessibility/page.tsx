@@ -22,7 +22,7 @@ export default function AccessibilityPage() {
         </Section>
         <Section title="The code editor">
           The embedded Java editor includes labeled controls, adjustable font size, and keyboard
-          shortcuts. We recommend pairing it with your screen reader's code-reading mode for the
+          shortcuts. We recommend pairing it with your screen reader&apos;s code-reading mode for the
           clearest experience.
         </Section>
       </div>

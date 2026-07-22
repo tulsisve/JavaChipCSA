@@ -117,9 +117,10 @@ export async function getStudentDashboardData(studentId: string, displayName: st
     }));
   }
 
-  const firstIncompleteUnit = units.find((u) =>
-    u.lessons.some((l) => !lessonProgress.some((p) => p.status === "completed"))
-  );
+  // Simple heuristic: advance one unit per completed lesson. Good enough for
+  // a "what's next" nudge; a real recommendation engine would match
+  // individual lesson IDs against student_lesson_progress per unit.
+  const firstIncompleteUnit = units[Math.min(completedLessons, units.length - 1)];
   const nextLesson = firstIncompleteUnit?.lessons.find((l) => l.built) ?? units[0].lessons[0];
   const todaysBrew = {
     title: nextLesson.title,

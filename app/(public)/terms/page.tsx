@@ -15,7 +15,7 @@ export default function TermsPage() {
         </Section>
         <Section title="Content ownership">
           Lessons, questions, FRQs, and rubrics on JavaChip are original works. You may use them
-          for personal study or, if you're a teacher, within your own classroom — not for
+          for personal study or, if you&apos;re a teacher, within your own classroom — not for
           redistribution or resale.
         </Section>
         <Section title="Automated scoring">
