@@ -37,7 +37,8 @@ const columns = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-border bg-surface-nav">
+    <footer className="wood-surface relative border-t border-border bg-surface-nav">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber/25 to-transparent" />
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 gap-10 sm:grid-cols-4">
           {columns.map((col) => (

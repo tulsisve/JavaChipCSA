@@ -13,7 +13,7 @@ export default async function VerifyEmailPage({
   const { email = "" } = await searchParams;
 
   return (
-    <Card>
+    <Card className="border-amber/15 bg-background-card/70 shadow-2xl shadow-black/40 backdrop-blur-xl">
       <CardHeader className="items-center text-center">
         <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-amber/15 text-amber">
           <Mail className="h-6 w-6" aria-hidden="true" />

@@ -38,7 +38,8 @@
   --danger: #c9695f;
   --success: var(--muted-sage);
 
-  --font-display: var(--font-cormorant);
+  --font-display: var(--font-playfair);
+  --font-serif-soft: var(--font-cormorant);
   --font-body: var(--font-inter);
   --font-mono: var(--font-jetbrains-mono);
 }
@@ -92,24 +93,16 @@
   --color-success: var(--success);
 
   --font-display: var(--font-display);
+  --font-serif-soft: var(--font-serif-soft);
   --font-sans: var(--font-body);
   --font-mono: var(--font-mono);
 }
 
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme="dark"]) {
-    --background: var(--warm-cream);
-    --background-raised: var(--parchment);
-    --background-card: #fffaf1;
-    --surface-border: color-mix(in srgb, var(--cafe-wood) 18%, transparent);
-    --foreground: var(--espresso-brown);
-    --foreground-muted: var(--cafe-wood);
-    --accent: #b96f22;
-    --accent-foreground: var(--warm-cream);
-    --surface-nav: var(--parchment);
-    --surface-code: #f1e6d2;
-  }
-}
+/* JavaChip's identity is the dark, rainy café theme — that's the default
+   for every visitor, regardless of their OS/browser color-scheme setting.
+   Light "parchment" mode is a deliberate opt-in from Settings
+   (data-theme="light"), never something that silently kicks in because a
+   visitor's system happens to prefer light apps. */
 
 * {
   border-color: var(--surface-border);
@@ -123,6 +116,36 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-body), system-ui, sans-serif;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* A faint wood-grain + vignette wash behind every dark-theme surface. Pure
+   CSS — no image assets — so it costs nothing to load and scales cleanly. */
+:root:not([data-theme="light"]) body {
+  background-image:
+    radial-gradient(ellipse 120% 80% at 15% -10%, color-mix(in srgb, var(--amber-glow) 7%, transparent), transparent 55%),
+    radial-gradient(ellipse 90% 70% at 100% 10%, color-mix(in srgb, var(--soft-gold) 5%, transparent), transparent 60%),
+    repeating-linear-gradient(
+      100deg,
+      color-mix(in srgb, #000 0%, transparent) 0px,
+      color-mix(in srgb, #000 0%, transparent) 2px,
+      color-mix(in srgb, #000 6%, transparent) 3px,
+      color-mix(in srgb, #000 0%, transparent) 5px,
+      color-mix(in srgb, #000 0%, transparent) 26px
+    ),
+    radial-gradient(ellipse 140% 100% at 50% 100%, color-mix(in srgb, #000 22%, transparent), transparent 65%);
+  background-attachment: fixed;
+}
+
+:root[data-theme="light"] body {
+  background-image: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display), Georgia, serif;
+  letter-spacing: -0.01em;
 }
 
 ::selection {
@@ -136,8 +159,13 @@ body {
   border-radius: 2px;
 }
 
-/* Rain / atmosphere layer — decorative only, hidden from assistive tech,
-   and disabled entirely when the user prefers reduced motion. */
+/* ==========================================================================
+   Atmosphere effects — rain, lamp glow, bokeh, steam, light sweep.
+   All decorative, aria-hidden by the components that render them, and
+   fully disabled under prefers-reduced-motion / the reduced-motion
+   preference toggle.
+   ========================================================================== */
+
 .rain-layer {
   pointer-events: none;
   position: absolute;
@@ -149,12 +177,14 @@ body {
   position: absolute;
   top: -10%;
   width: 1px;
-  height: 8rem;
+  border-radius: 999px;
   background: linear-gradient(
     to bottom,
     transparent,
-    color-mix(in srgb, var(--soft-gold) 35%, transparent)
+    color-mix(in srgb, var(--soft-gold) 45%, transparent) 55%,
+    color-mix(in srgb, var(--warm-cream) 60%, transparent)
   );
+  filter: blur(0.2px);
   animation: rain-fall linear infinite;
 }
 
@@ -164,12 +194,167 @@ body {
   }
 }
 
+/* Faint pooled reflections at the base of a rain layer — pairs with
+   .rain-layer to suggest a wet windowsill or street without extra markup. */
+.rain-puddle-glow {
+  pointer-events: none;
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 35%;
+  background: linear-gradient(to top, color-mix(in srgb, var(--amber-glow) 10%, transparent), transparent);
+  filter: blur(20px);
+}
+
 .lamp-glow {
   background: radial-gradient(
     circle at 50% 20%,
     color-mix(in srgb, var(--amber-glow) 22%, transparent),
     transparent 60%
   );
+}
+
+/* Slow-drifting warm bokeh circles — evokes out-of-focus café/street lights
+   behind a rainy window. Cheap: a handful of blurred, animated divs. */
+.bokeh-layer {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.bokeh-circle {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(2px);
+  opacity: 0.5;
+  background: radial-gradient(circle at 35% 35%, color-mix(in srgb, var(--soft-gold) 85%, transparent), transparent 70%);
+  animation: bokeh-drift ease-in-out infinite alternate;
+}
+
+@keyframes bokeh-drift {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(var(--drift-x, 18px), var(--drift-y, -14px)) scale(1.06);
+  }
+}
+
+/* A soft diagonal light sweep across glass-like panels — suggests a
+   reflection moving across a rainy window pane. */
+.light-sweep {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.light-sweep::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    color-mix(in srgb, var(--warm-cream) 10%, transparent) 45%,
+    color-mix(in srgb, var(--soft-gold) 14%, transparent) 50%,
+    transparent 60%
+  );
+  transform: rotate(8deg);
+  animation: light-sweep-move 9s ease-in-out infinite;
+}
+
+@keyframes light-sweep-move {
+  0%, 15% {
+    left: -60%;
+  }
+  55%, 100% {
+    left: 130%;
+  }
+}
+
+/* Rising steam — for a coffee-cup accent. Two overlapping wisps for depth. */
+.steam-wisp {
+  position: absolute;
+  bottom: 100%;
+  width: 3px;
+  border-radius: 999px;
+  background: linear-gradient(to top, color-mix(in srgb, var(--warm-cream) 55%, transparent), transparent);
+  filter: blur(2.5px);
+  animation: steam-rise 3.2s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+@keyframes steam-rise {
+  0% {
+    height: 0;
+    opacity: 0;
+    transform: translateX(0) scaleX(1);
+  }
+  20% {
+    opacity: 0.65;
+  }
+  100% {
+    height: 34px;
+    opacity: 0;
+    transform: translateX(6px) scaleX(1.8);
+  }
+}
+
+/* Glassmorphism panel — a subtle frosted card used sparingly for hero and
+   preview surfaces, with a faint inner highlight to suggest glass over wood. */
+.glass-panel {
+  position: relative;
+  background: color-mix(in srgb, var(--background-card) 78%, transparent);
+  backdrop-filter: blur(14px) saturate(1.1);
+  -webkit-backdrop-filter: blur(14px) saturate(1.1);
+  border: 1px solid color-mix(in srgb, var(--soft-gold) 20%, var(--surface-border));
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--warm-cream) 8%, transparent),
+    0 24px 60px -20px color-mix(in srgb, #000 65%, transparent);
+}
+
+/* Wood-grain surface for nav/sidebar chrome — layered gradients only. */
+.wood-surface {
+  background-image:
+    repeating-linear-gradient(
+      95deg,
+      color-mix(in srgb, #000 0%, transparent) 0px,
+      color-mix(in srgb, #000 0%, transparent) 3px,
+      color-mix(in srgb, #000 8%, transparent) 4px,
+      color-mix(in srgb, #000 0%, transparent) 7px,
+      color-mix(in srgb, #000 0%, transparent) 34px
+    ),
+    linear-gradient(180deg, color-mix(in srgb, var(--amber-glow) 4%, transparent), transparent 40%);
+}
+
+/* Fibrous parchment texture — for light-mode reading surfaces. */
+.paper-texture {
+  background-image:
+    radial-gradient(circle at 20% 30%, color-mix(in srgb, var(--cafe-wood) 5%, transparent) 0%, transparent 3%),
+    radial-gradient(circle at 70% 65%, color-mix(in srgb, var(--cafe-wood) 4%, transparent) 0%, transparent 2.5%),
+    radial-gradient(circle at 45% 85%, color-mix(in srgb, var(--cafe-wood) 4%, transparent) 0%, transparent 2%),
+    repeating-linear-gradient(
+      3deg,
+      transparent 0px,
+      transparent 18px,
+      color-mix(in srgb, var(--cafe-wood) 2.5%, transparent) 19px,
+      transparent 20px
+    );
+}
+
+/* Coffee-ring accent — a decorative stain, used very sparingly. */
+.coffee-ring {
+  pointer-events: none;
+  position: absolute;
+  border-radius: 50%;
+  border: 6px solid color-mix(in srgb, var(--cafe-wood) 22%, transparent);
+  filter: blur(0.5px);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -181,13 +366,19 @@ body {
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
-  .rain-layer {
+  .rain-layer,
+  .bokeh-layer,
+  .light-sweep::before,
+  .steam-wisp {
     display: none;
   }
 }
 
 [data-reduced-motion="true"] .rain-layer,
-[data-reduced-motion="true"] .lamp-glow {
+[data-reduced-motion="true"] .lamp-glow,
+[data-reduced-motion="true"] .bokeh-layer,
+[data-reduced-motion="true"] .light-sweep::before,
+[data-reduced-motion="true"] .steam-wisp {
   display: none;
 }
 
@@ -195,4 +386,22 @@ body {
 * {
   scrollbar-color: var(--latte-beige) transparent;
   scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--latte-beige) 55%, transparent);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--soft-gold) 70%, transparent);
+  background-clip: content-box;
 }

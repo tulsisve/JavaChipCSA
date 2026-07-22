@@ -9,7 +9,8 @@ export function Card({
   return (
     <Tag
       className={cn(
-        "rounded-xl border border-border bg-background-card/90 shadow-lg shadow-black/10 backdrop-blur-sm",
+        "relative rounded-xl border border-border bg-background-card/90 shadow-lg shadow-black/15 backdrop-blur-sm",
+        "before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:rounded-t-xl before:bg-gradient-to-r before:from-transparent before:via-warm-cream/15 before:to-transparent",
         className
       )}
       {...props}

@@ -4,17 +4,17 @@ import { forwardRef } from "react";
 import { cn } from "@/lib/utilities/cn";
 
 export const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 rounded-md font-medium transition-colors duration-200 disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none",
+  "inline-flex items-center justify-center gap-2 rounded-md font-medium transition-[background-color,box-shadow,transform,border-color] duration-200 ease-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none active:scale-[0.98] motion-reduce:hover:translate-y-0 motion-reduce:active:scale-100",
   {
     variants: {
       variant: {
         primary:
-          "bg-amber text-espresso hover:bg-gold shadow-sm shadow-black/20",
+          "bg-gradient-to-b from-gold to-amber text-espresso shadow-md shadow-black/25 hover:shadow-lg hover:shadow-amber/25 hover:-translate-y-0.5",
         secondary:
-          "bg-transparent border border-border text-foreground hover:bg-background-raised",
+          "bg-transparent border border-border text-foreground hover:bg-background-raised hover:border-latte/50 hover:-translate-y-0.5",
         ghost: "bg-transparent text-foreground hover:bg-background-raised",
         outline:
-          "border border-amber/60 text-amber hover:bg-amber/10",
+          "border border-amber/60 text-amber hover:bg-amber/10 hover:border-amber hover:-translate-y-0.5",
         link: "bg-transparent underline-offset-4 hover:underline text-amber p-0 h-auto",
         danger: "bg-danger text-warm-cream hover:brightness-110",
       },

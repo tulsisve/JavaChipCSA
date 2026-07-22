@@ -1,9 +1,11 @@
 import Link from "next/link";
-import { Coffee, BookOpen, Code2, PenLine, Users, LayoutDashboard, Check } from "lucide-react";
+import { BookOpen, Code2, PenLine, Users, LayoutDashboard, Check } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { RainBackdrop } from "@/components/layout/RainBackdrop";
+import { BokehLights } from "@/components/layout/BokehLights";
+import { SteamCup } from "@/components/layout/SteamCup";
 import { FaqAccordion } from "@/components/marketing/FaqAccordion";
 import { units } from "@/lib/content/units";
 
@@ -41,12 +43,15 @@ export default function LandingPage() {
       {/* Hero */}
       <section className="relative overflow-hidden bg-espresso">
         <div className="lamp-glow absolute inset-0" />
+        <BokehLights />
         <RainBackdrop />
         <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8">
           <div className="grid items-center gap-16 lg:grid-cols-2">
             <div>
-              <Badge variant="amber" className="mb-6">Sip. Study. Compile.</Badge>
-              <h1 className="font-display text-5xl font-semibold leading-[1.05] text-warm-cream sm:text-6xl">
+              <Badge variant="amber" className="mb-6">
+                <span className="font-serif-soft italic">Sip. Study. Compile.</span>
+              </Badge>
+              <h1 className="text-balance font-display text-5xl font-semibold leading-[1.05] text-warm-cream drop-shadow-[0_2px_24px_rgba(217,148,69,0.18)] sm:text-6xl lg:text-7xl">
                 Java finally clicks.
               </h1>
               <p className="mt-6 max-w-lg text-lg leading-relaxed text-latte">
@@ -62,20 +67,21 @@ export default function LandingPage() {
                   Teach with JavaChip →
                 </Button>
               </div>
-              <p className="mt-8 text-sm text-latte/70">
+              <p className="mt-8 font-serif-soft text-base italic text-latte/70">
                 Settle in, open your editor, and build your confidence one line at a time.
               </p>
             </div>
 
             <div className="relative hidden lg:block">
-              <div className="rounded-xl border border-latte/20 bg-dark-roast/80 p-5 shadow-2xl shadow-black/40 backdrop-blur">
-                <div className="flex items-center gap-1.5 pb-3">
+              <div className="glass-panel relative overflow-hidden rounded-xl p-5">
+                <div className="light-sweep" />
+                <div className="relative flex items-center gap-1.5 pb-3">
                   <span className="h-2.5 w-2.5 rounded-full bg-burgundy/70" />
                   <span className="h-2.5 w-2.5 rounded-full bg-gold/70" />
                   <span className="h-2.5 w-2.5 rounded-full bg-sage/70" />
                   <span className="ml-3 text-xs text-latte/60">TimeConverter.java</span>
                 </div>
-                <pre className="overflow-x-auto rounded-md bg-surface-code p-4 font-mono text-[13px] leading-relaxed text-parchment">
+                <pre className="relative overflow-x-auto rounded-md bg-surface-code p-4 font-mono text-[13px] leading-relaxed text-parchment shadow-inner shadow-black/40">
 {`public class TimeConverter {
     public static void main(String[] args) {
         int totalMinutes = 155;
@@ -89,16 +95,25 @@ export default function LandingPage() {
     }
 }`}
                 </pre>
-                <div className="mt-3 flex items-center gap-2 text-xs text-sage">
+                <div className="relative mt-3 flex items-center gap-2 text-xs text-sage">
                   <Check className="h-3.5 w-3.5" /> 2 hours and 35 minutes
                 </div>
               </div>
-              <div className="absolute -right-6 -top-6 flex items-center gap-2 rounded-full border border-latte/20 bg-dark-roast/90 px-4 py-2 text-xs text-latte shadow-lg">
-                <Coffee className="h-3.5 w-3.5 text-amber" /> Deep Brew session — 41:12 remaining
+              <div className="absolute -right-6 -top-8 flex items-center gap-2.5 rounded-full border border-latte/20 bg-dark-roast/90 py-2 pl-2 pr-4 text-xs text-latte shadow-lg shadow-black/40">
+                <SteamCup size={30} />
+                <span>Deep Brew session — 41:12 remaining</span>
               </div>
+              <div
+                className="coffee-ring -bottom-10 -left-8 h-24 w-24 opacity-40"
+                aria-hidden="true"
+              />
             </div>
           </div>
         </div>
+
+        {/* A soft wood-grain sill along the bottom edge of the hero, like the
+            windowsill in a rainy café. */}
+        <div className="wood-surface absolute inset-x-0 bottom-0 h-3 bg-cafe-wood/70" aria-hidden="true" />
       </section>
 
       {/* Trusted-learning message */}
@@ -164,7 +179,8 @@ export default function LandingPage() {
             </p>
             <Button href="/sign-up" className="mt-6 w-fit">Build your dashboard</Button>
           </div>
-          <Card className="p-6">
+          <Card className="overflow-hidden p-6">
+            <div className="wood-surface absolute inset-x-0 top-0 h-1.5" aria-hidden="true" />
             <div className="flex items-center gap-2 text-amber">
               <LayoutDashboard className="h-4 w-4" />
               <span className="text-xs font-medium uppercase tracking-wide">Today&apos;s Brew</span>
@@ -196,7 +212,7 @@ export default function LandingPage() {
             <Link
               key={unit.slug}
               href={`/student/units/${unit.slug}`}
-              className="group rounded-lg border border-border bg-background-card p-5 transition-colors hover:border-amber/50"
+              className="group relative overflow-hidden rounded-lg border border-border bg-background-card p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-amber/50 hover:shadow-xl hover:shadow-black/20 motion-reduce:hover:translate-y-0"
             >
               <span className="font-mono text-xs text-amber">Unit {unit.unitNumber}</span>
               <h3 className="mt-1 font-display text-lg font-semibold text-foreground group-hover:text-amber">
@@ -209,9 +225,13 @@ export default function LandingPage() {
       </section>
 
       {/* Pricing teaser */}
-      <section className="border-y border-border bg-background-raised py-24">
-        <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
-          <Badge variant="amber" className="mb-4">JavaChip Pro</Badge>
+      <section className="relative overflow-hidden border-y border-border bg-background-raised py-24">
+        <BokehLights />
+        <div className="relative mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
+          <div className="mb-4 flex items-center justify-center gap-3">
+            <SteamCup size={34} />
+            <Badge variant="amber">JavaChip Pro</Badge>
+          </div>
           <h2 className="font-display text-3xl font-semibold text-foreground sm:text-4xl">
             Free to explore. Simple to grow into.
           </h2>
@@ -254,7 +274,10 @@ export default function LandingPage() {
       {/* Final CTA */}
       <section className="relative overflow-hidden bg-espresso py-24">
         <div className="lamp-glow absolute inset-0" />
+        <BokehLights />
+        <RainBackdrop withPuddleGlow={false} />
         <div className="relative mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
+          <SteamCup size={44} className="mx-auto mb-5" />
           <h2 className="font-display text-3xl font-semibold text-warm-cream sm:text-4xl">
             Your study desk is waiting.
           </h2>

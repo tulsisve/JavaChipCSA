@@ -7,7 +7,7 @@ export const metadata: Metadata = { title: "Create your account" };
 
 export default function SignUpPage() {
   return (
-    <Card>
+    <Card className="border-amber/15 bg-background-card/70 shadow-2xl shadow-black/40 backdrop-blur-xl">
       <CardHeader>
         <CardTitle>Start studying</CardTitle>
         <CardDescription>Settle in, open your editor, and start building.</CardDescription>

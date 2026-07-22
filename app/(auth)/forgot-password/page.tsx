@@ -6,7 +6,7 @@ export const metadata: Metadata = { title: "Reset your password" };
 
 export default function ForgotPasswordPage() {
   return (
-    <Card>
+    <Card className="border-amber/15 bg-background-card/70 shadow-2xl shadow-black/40 backdrop-blur-xl">
       <CardHeader>
         <CardTitle>Forgot your password?</CardTitle>
         <CardDescription>We&apos;ll send a reset link to your email.</CardDescription>
