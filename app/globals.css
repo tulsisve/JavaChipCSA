@@ -22,6 +22,13 @@
   --soft-gold: #d7b16b;
   --muted-sage: #788276;
   --deep-burgundy: #653f3b;
+  /* Brighter, more saturated siblings of sage/burgundy/slate — used for
+     text, icons, and small accents on dark surfaces, where the muted
+     originals above read as near-invisible mud rather than actual color.
+     The muted tones stay reserved for large fills (plant leaves, stains). */
+  --sage-bright: #8fae74;
+  --burgundy-bright: #c0685f;
+  --slate-bright: #8fa8b8;
 
   /* Semantic surface tokens — dark study-room theme (default) */
   --background: var(--espresso-brown);
@@ -77,6 +84,9 @@
   --color-gold: var(--soft-gold);
   --color-sage: var(--muted-sage);
   --color-burgundy: var(--deep-burgundy);
+  --color-sage-bright: var(--sage-bright);
+  --color-burgundy-bright: var(--burgundy-bright);
+  --color-slate-bright: var(--slate-bright);
 
   --color-background: var(--background);
   --color-background-raised: var(--background-raised);
