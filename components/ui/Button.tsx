@@ -4,7 +4,7 @@ import { forwardRef } from "react";
 import { cn } from "@/lib/utilities/cn";
 
 export const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 rounded-md font-medium transition-[background-color,box-shadow,transform,border-color] duration-200 ease-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none active:scale-[0.98] motion-reduce:hover:translate-y-0 motion-reduce:active:scale-100",
+  "inline-flex items-center justify-center gap-2 rounded-full font-medium transition-[background-color,box-shadow,transform,border-color] duration-200 ease-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none active:scale-[0.98] motion-reduce:hover:translate-y-0 motion-reduce:active:scale-100",
   {
     variants: {
       variant: {

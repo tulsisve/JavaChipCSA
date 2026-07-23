@@ -403,6 +403,15 @@ h1, h2, h3, h4, h5, h6 {
   animation: pixel-twinkle 2.4s ease-in-out infinite;
 }
 
+/* Hard-edged stepped shadow for PixelArt sprites (drinks, chocolate chip) —
+   same chunky retro feel as .pixel-text, via stacked zero-blur
+   drop-shadow() filters so it follows the sprite's transparent pixels. */
+.pixel-drop-shadow {
+  filter:
+    drop-shadow(2px 2px 0 var(--cafe-wood))
+    drop-shadow(3px 3px 0 var(--dark-roast));
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

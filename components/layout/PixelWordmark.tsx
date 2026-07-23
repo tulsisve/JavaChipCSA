@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utilities/cn";
 import { PixelSparkle } from "@/components/layout/PixelSparkle";
+import { PixelChocolateChip } from "@/components/layout/PixelDrinks";
 
 const SIZE_CLASSES = {
   sm: "text-lg gap-1.5",
@@ -8,11 +9,13 @@ const SIZE_CLASSES = {
   xl: "text-6xl gap-4 sm:text-7xl",
 } as const;
 
+const CHIP_PIXEL_SIZE = { sm: 2, md: 2, lg: 3, xl: 4 } as const;
+
 /**
  * The JavaChip logo lockup: a chunky, pixel-font wordmark with a hard
- * extruded block shadow and twinkling sparkle accents — built entirely in
- * CSS/SVG (see .pixel-text and .pixel-sparkle in globals.css) so it's
- * crisp at any size, themeable, and never a raster asset to keep in sync.
+ * extruded block shadow, a little chocolate-chip accent standing in for
+ * the dot of the "j", and (optionally) twinkling sparkles — built entirely
+ * in CSS/SVG (see .pixel-text in globals.css) so it's crisp at any size.
  */
 export function PixelWordmark({
   size = "md",
@@ -33,7 +36,14 @@ export function PixelWordmark({
           <PixelSparkle size={size === "xl" ? 14 : 8} className="absolute -right-9 bottom-1 sm:-right-12" delay="1.7s" color="var(--soft-gold)" />
         </>
       )}
-      <span>java</span>
+      <span className="relative inline-block">
+        <PixelChocolateChip
+          pixelSize={CHIP_PIXEL_SIZE[size]}
+          className="absolute -top-[0.5em] left-[0.16em] -rotate-12"
+        />
+        j
+      </span>
+      <span>ava</span>
       <span>chip</span>
     </span>
   );

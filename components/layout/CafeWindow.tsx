@@ -27,18 +27,17 @@ const STREETLIGHTS = [
 ];
 
 /**
- * A literal multi-pane café window at night: cool blue-gray sky, a distant
- * lit skyline, warm streetlight bokeh, and rain sliding down the glass —
- * behind visible wooden mullions. This is the hero's real focal point, not
- * an abstract gradient — the brief asked for an actual window, so this is
- * one, built entirely in CSS (no image assets).
+ * A literal multi-pane café window at golden-hour dusk: warm amber-brown
+ * sky (no blue — this stays in the coffee-shop palette), a distant lit
+ * skyline, streetlight bokeh, and rain sliding down the glass — behind
+ * visible wooden mullions. Built entirely in CSS (no image assets).
  */
 export function CafeWindow({ className = "" }: { className?: string }) {
   return (
     <div className={`relative ${className}`} aria-hidden="true">
       {/* Wooden frame */}
       <div className="wood-surface rounded-2xl bg-cafe-wood p-2.5 shadow-2xl shadow-black/50 sm:p-3.5">
-        <div className="relative overflow-hidden rounded-lg bg-gradient-to-b from-rainy-slate via-storm-blue to-dark-roast">
+        <div className="relative overflow-hidden rounded-lg bg-gradient-to-b from-cafe-wood via-walnut to-dark-roast">
           {/* Sky + street scene (one continuous view behind the mullions) */}
           <div className="relative aspect-[6/5] w-full overflow-hidden">
             {/* streetlight bokeh */}
@@ -118,8 +117,8 @@ export function CafeWindow({ className = "" }: { className?: string }) {
 
       {/* Condensation droplets clinging to the outer frame edge, for a touch
           of tactile realism. */}
-      <span className="absolute -bottom-2 left-10 h-2 w-2 rounded-full bg-storm-blue/60 blur-[1px]" />
-      <span className="absolute -bottom-3 left-24 h-1.5 w-1.5 rounded-full bg-storm-blue/50 blur-[1px]" />
+      <span className="absolute -bottom-2 left-10 h-2 w-2 rounded-full bg-latte/60 blur-[1px]" />
+      <span className="absolute -bottom-3 left-24 h-1.5 w-1.5 rounded-full bg-latte/50 blur-[1px]" />
     </div>
   );
 }
