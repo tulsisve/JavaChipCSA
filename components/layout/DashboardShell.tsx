@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { logoutAction } from "@/actions/auth";
 import { cn } from "@/lib/utilities/cn";
+import { PixelWordmark } from "@/components/layout/PixelWordmark";
 
 export function DashboardShell({
   sidebar,
@@ -32,9 +33,8 @@ export function DashboardShell({
           >
             {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
-          <Link href="/" className="inline-flex items-baseline gap-1">
-            <span className="font-display text-lg font-semibold text-foreground">Java</span>
-            <span className="font-mono text-amber">Chip</span>
+          <Link href="/">
+            <PixelWordmark size="sm" />
           </Link>
         </div>
         <div className="flex items-center gap-3">

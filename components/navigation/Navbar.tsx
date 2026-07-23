@@ -2,7 +2,7 @@ import Link from "next/link";
 import { getSessionUser } from "@/lib/auth/session";
 import { Button } from "@/components/ui/Button";
 import { MobileNav } from "@/components/navigation/MobileNav";
-import { SteamCup } from "@/components/layout/SteamCup";
+import { PixelWordmark } from "@/components/layout/PixelWordmark";
 
 const links = [
   { href: "/features", label: "Features" },
@@ -18,12 +18,8 @@ export async function Navbar() {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-surface-nav/90 shadow-[0_1px_0_0_rgba(217,148,69,0.08)] backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="group inline-flex items-center gap-1.5 text-xl">
-          <SteamCup size={26} className="-mb-1 opacity-90 transition-transform group-hover:-translate-y-0.5" />
-          <span className="inline-flex items-baseline gap-1">
-            <span className="font-display font-semibold text-foreground">Java</span>
-            <span className="font-mono text-amber">Chip</span>
-          </span>
+        <Link href="/" className="group inline-flex items-center transition-transform hover:-translate-y-0.5">
+          <PixelWordmark size="sm" />
         </Link>
 
         <nav aria-label="Primary" className="hidden items-center gap-7 md:flex">

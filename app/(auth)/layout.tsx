@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { RainBackdrop } from "@/components/layout/RainBackdrop";
 import { BokehLights } from "@/components/layout/BokehLights";
-import { SteamCup } from "@/components/layout/SteamCup";
+import { PixelWordmark } from "@/components/layout/PixelWordmark";
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -10,12 +10,8 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
       <BokehLights />
       <RainBackdrop />
       <header className="relative z-10 px-6 py-6 sm:px-10">
-        <Link href="/" className="group inline-flex items-center gap-1.5 text-2xl">
-          <SteamCup size={30} className="-mb-1 transition-transform group-hover:-translate-y-0.5" />
-          <span className="inline-flex items-baseline gap-1">
-            <span className="font-display font-semibold text-warm-cream">Java</span>
-            <span className="font-mono text-amber">Chip</span>
-          </span>
+        <Link href="/" className="group inline-flex items-center transition-transform hover:-translate-y-0.5">
+          <PixelWordmark size="md" />
         </Link>
       </header>
       <main className="relative z-10 flex flex-1 items-center justify-center px-4 pb-16">

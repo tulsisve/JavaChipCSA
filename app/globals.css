@@ -106,6 +106,7 @@
   --font-serif-soft: var(--font-serif-soft);
   --font-sans: var(--font-body);
   --font-mono: var(--font-mono);
+  --font-pixel: var(--font-pixel);
 }
 
 /* JavaChip's identity is the dark, rainy café theme — that's the default
@@ -365,6 +366,41 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 50%;
   border: 6px solid color-mix(in srgb, var(--cafe-wood) 22%, transparent);
   filter: blur(0.5px);
+}
+
+/* ==========================================================================
+   Pixel wordmark — the JavaChip logo lockup: chunky retro-game lettering
+   built from stacked hard-edged (unblurred) text-shadow layers instead of
+   a raster image, so it stays crisp at any size and themes with the rest
+   of the palette. Scales in em units off font-size.
+   ========================================================================== */
+
+.pixel-text {
+  font-family: var(--font-pixel);
+  -webkit-font-smoothing: none;
+  text-rendering: geometricPrecision;
+  text-shadow:
+    0.06em 0.06em 0 var(--cafe-wood),
+    0.09em 0.09em 0 var(--cafe-wood),
+    0.12em 0.12em 0 var(--cafe-wood),
+    0.16em 0.16em 0 var(--dark-roast),
+    0.2em 0.2em 0 var(--dark-roast),
+    0.24em 0.24em 0 var(--dark-roast);
+}
+
+@keyframes pixel-twinkle {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.55) rotate(8deg);
+    opacity: 0.45;
+  }
+}
+
+.pixel-sparkle {
+  animation: pixel-twinkle 2.4s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {

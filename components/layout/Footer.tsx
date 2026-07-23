@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PixelWordmark } from "@/components/layout/PixelWordmark";
 
 const columns = [
   {
@@ -60,9 +61,8 @@ export function Footer() {
           ))}
         </div>
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-6 sm:flex-row">
-          <Link href="/" className="inline-flex items-baseline gap-1">
-            <span className="font-display font-semibold text-foreground">Java</span>
-            <span className="font-mono text-amber">Chip</span>
+          <Link href="/">
+            <PixelWordmark size="sm" />
           </Link>
           <p className="text-xs text-foreground-muted">
             © {new Date().getFullYear()} JavaChip. Not affiliated with or endorsed by the College Board.

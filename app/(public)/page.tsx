@@ -2,9 +2,12 @@ import Link from "next/link";
 import { Check, Pin } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { RainBackdrop } from "@/components/layout/RainBackdrop";
+import { BokehLights } from "@/components/layout/BokehLights";
 import { CafeWindow } from "@/components/layout/CafeWindow";
 import { WindowsillPlant } from "@/components/layout/WindowsillPlant";
 import { SteamCup } from "@/components/layout/SteamCup";
+import { PixelWordmark } from "@/components/layout/PixelWordmark";
+import { PixelSparkle } from "@/components/layout/PixelSparkle";
 import { FaqAccordion } from "@/components/marketing/FaqAccordion";
 import { units } from "@/lib/content/units";
 
@@ -100,13 +103,25 @@ const NOTES = [
 export default function LandingPage() {
   return (
     <>
-      {/* Hero — an actual window, not an abstract gradient */}
+      {/* Hero, part one — the logo gets its own billboard moment */}
+      <section className="relative overflow-hidden bg-espresso">
+        <div className="lamp-glow absolute inset-0" />
+        <BokehLights />
+        <RainBackdrop withPuddleGlow={false} />
+        <div className="relative mx-auto flex max-w-5xl flex-col items-center px-4 pb-6 pt-20 text-center sm:pt-24">
+          <PixelWordmark size="xl" sparkles className="justify-center" />
+          <p className="mt-8 font-serif-soft text-xl italic text-gold sm:text-2xl">
+            Sip. Study. Compile.
+          </p>
+        </div>
+      </section>
+
+      {/* Hero, part two — the headline moves here, alongside the window */}
       <section className="relative overflow-hidden bg-espresso">
         <RainBackdrop withPuddleGlow={false} />
-        <div className="relative mx-auto grid max-w-7xl gap-12 px-4 py-20 sm:px-6 sm:py-28 lg:grid-cols-[1.05fr_1fr] lg:items-center lg:gap-8 lg:px-8">
+        <div className="relative mx-auto grid max-w-7xl gap-12 px-4 pb-20 pt-6 sm:px-6 sm:pb-28 lg:grid-cols-[1.05fr_1fr] lg:items-center lg:gap-8 lg:px-8">
           <div>
-            <p className="font-serif-soft text-lg italic text-gold">Sip. Study. Compile.</p>
-            <h1 className="mt-3 text-balance font-display text-5xl font-semibold leading-[1.04] text-warm-cream sm:text-6xl lg:text-[4.2rem]">
+            <h1 className="text-balance font-display text-4xl font-semibold leading-[1.08] text-warm-cream sm:text-5xl">
               Java finally clicks.
             </h1>
             <p className="mt-6 max-w-lg text-lg leading-relaxed text-latte">
@@ -132,19 +147,20 @@ export default function LandingPage() {
           </div>
 
           <div className="relative">
+            <PixelSparkle size={20} className="absolute -top-6 right-10 hidden sm:block" delay="0.3s" />
             <CafeWindow className="w-full" />
             <WindowsillPlant className="absolute -bottom-6 -left-4 hidden sm:block" />
 
             {/* A small pinned index card with the concrete product demo —
                 tucked over the window like a note stuck to the frame. */}
             <div className="absolute -bottom-8 right-2 hidden w-56 rotate-[3deg] rounded-md border border-latte/15 bg-dark-roast p-3.5 shadow-2xl shadow-black/50 sm:block">
-              <Pin className="absolute -top-2.5 left-1/2 h-4 w-4 -translate-x-1/2 -rotate-12 text-burgundy" />
+              <Pin className="absolute -top-2.5 left-1/2 h-4 w-4 -translate-x-1/2 -rotate-12 text-burgundy-bright" />
               <p className="font-mono text-[11px] text-latte/70">TimeConverter.java</p>
               <pre className="mt-1.5 overflow-hidden font-mono text-[10px] leading-relaxed text-parchment">
 {`int h = total / 60;
 int m = total % 60;`}
               </pre>
-              <p className="mt-1.5 flex items-center gap-1 font-mono text-[10px] text-sage">
+              <p className="mt-1.5 flex items-center gap-1 font-mono text-[10px] text-sage-bright">
                 <Check className="h-2.5 w-2.5" /> 2h 35m
               </p>
             </div>
@@ -165,7 +181,8 @@ int m = total % 60;`}
       {/* Feature menu — a chalkboard-style numbered list, not a repeated icon-card grid */}
       <section className="bg-walnut py-24">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <h2 className="font-display text-3xl font-semibold text-foreground sm:text-4xl">
+          <h2 className="relative inline-flex items-center gap-3 font-display text-3xl font-semibold text-foreground sm:text-4xl">
+            <PixelSparkle size={20} delay="0.4s" />
             What&apos;s on the menu
           </h2>
           <p className="mt-3 max-w-xl text-foreground-muted">
@@ -317,7 +334,8 @@ int m = total % 60;`}
       <section className="relative overflow-hidden bg-espresso py-24">
         <div className="relative mx-auto grid max-w-5xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-[1fr_0.8fr] lg:px-8">
           <div>
-            <h2 className="font-display text-3xl font-semibold text-warm-cream sm:text-4xl">
+            <h2 className="relative inline-flex items-center gap-3 font-display text-3xl font-semibold text-warm-cream sm:text-4xl">
+              <PixelSparkle size={20} delay="0.9s" />
               Your study desk is waiting.
             </h2>
             <p className="mt-4 text-latte">
