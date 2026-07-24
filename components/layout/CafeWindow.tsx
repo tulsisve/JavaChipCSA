@@ -36,8 +36,8 @@ export function CafeWindow({ className = "" }: { className?: string }) {
   return (
     <div className={`relative ${className}`} aria-hidden="true">
       {/* Wooden frame */}
-      <div className="wood-surface rounded-2xl bg-cafe-wood p-2.5 shadow-2xl shadow-black/50 sm:p-3.5">
-        <div className="relative overflow-hidden rounded-lg bg-gradient-to-b from-cafe-wood via-walnut to-dark-roast">
+      <div className="wood-surface pixel-corners-lg bg-cafe-wood p-2.5 shadow-2xl shadow-black/50 sm:p-3.5">
+        <div className="pixel-corners relative overflow-hidden bg-gradient-to-b from-cafe-wood via-walnut to-dark-roast">
           {/* Sky + street scene (one continuous view behind the mullions) */}
           <div className="relative aspect-[6/5] w-full overflow-hidden">
             {/* streetlight bokeh */}

@@ -143,7 +143,7 @@ export default function LandingPage() {
 
             {/* A small pinned index card with the concrete product demo —
                 tucked over the window like a note stuck to the frame. */}
-            <div className="absolute -bottom-8 right-2 hidden w-56 rotate-[3deg] rounded-2xl border border-latte/15 bg-dark-roast p-3.5 shadow-2xl shadow-black/50 sm:block">
+            <div className="pixel-corners pixel-shadow absolute -bottom-8 right-2 hidden w-56 rotate-[3deg] bg-dark-roast p-3.5 sm:block">
               <Pin className="absolute -top-2.5 left-1/2 h-4 w-4 -translate-x-1/2 -rotate-12 text-burgundy-bright" />
               <p className="font-mono text-[11px] text-latte/70">TimeConverter.java</p>
               <pre className="mt-1.5 overflow-hidden font-mono text-[10px] leading-relaxed text-parchment">
@@ -282,7 +282,7 @@ int m = total % 60;`}
           </h2>
           <div className="mt-14 grid gap-8 sm:grid-cols-3">
             {NOTES.map((note, i) => (
-              <div key={i} className={`relative ${note.rotate} rounded-xl ${note.bg} p-6 pt-8 shadow-xl shadow-black/30`}>
+              <div key={i} className={`pixel-corners pixel-shadow relative ${note.rotate} ${note.bg} p-6 pt-8`}>
                 <span className="absolute left-1/2 top-2 h-2.5 w-2.5 -translate-x-1/2 rounded-full bg-burgundy shadow" />
                 <p className="font-serif-soft text-base italic text-espresso">{note.text}</p>
               </div>

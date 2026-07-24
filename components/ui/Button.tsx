@@ -4,22 +4,19 @@ import { forwardRef } from "react";
 import { cn } from "@/lib/utilities/cn";
 
 export const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 rounded-full font-medium transition-[background-color,box-shadow,transform,border-color] duration-200 ease-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none active:scale-[0.98] motion-reduce:hover:translate-y-0 motion-reduce:active:scale-100",
+  "inline-flex items-center justify-center gap-2 font-[family-name:var(--font-display)] font-medium tracking-wide disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none",
   {
     variants: {
       variant: {
-        primary:
-          "bg-gradient-to-b from-gold to-amber text-espresso shadow-md shadow-black/25 hover:shadow-lg hover:shadow-amber/25 hover:-translate-y-0.5",
-        secondary:
-          "bg-transparent border border-border text-foreground hover:bg-background-raised hover:border-latte/50 hover:-translate-y-0.5",
-        ghost: "bg-transparent text-foreground hover:bg-background-raised",
-        outline:
-          "border border-amber/60 text-amber hover:bg-amber/10 hover:border-amber hover:-translate-y-0.5",
+        primary: "pixel-btn bg-gradient-to-b from-gold to-amber text-espresso",
+        secondary: "pixel-btn pixel-btn-light bg-background-raised text-foreground",
+        ghost: "pixel-corners text-foreground hover:bg-background-raised transition-colors",
+        outline: "pixel-btn pixel-btn-light bg-amber/10 text-amber",
         link: "bg-transparent underline-offset-4 hover:underline text-amber p-0 h-auto",
-        danger: "bg-danger text-warm-cream hover:brightness-110",
+        danger: "pixel-btn bg-danger text-warm-cream",
       },
       size: {
-        sm: "h-9 px-3 text-sm",
+        sm: "h-9 px-3.5 text-sm",
         md: "h-11 px-5 text-sm",
         lg: "h-13 px-7 text-base",
         icon: "h-10 w-10",

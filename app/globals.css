@@ -45,10 +45,24 @@
   --danger: #c9695f;
   --success: var(--muted-sage);
 
-  --font-display: var(--font-playfair);
+  --font-display: var(--font-pixelify);
   --font-serif-soft: var(--font-cormorant);
   --font-body: var(--font-inter);
   --font-mono: var(--font-jetbrains-mono);
+
+  /* ---- Pixel-UI tokens ---------------------------------------------------
+     A single reusable notched-corner clip-path (each corner loses a --px
+     square) plus the chunky border line + hard offset-shadow colors. Any
+     element sets its own --px and applies clip-path: var(--pixel-notch). */
+  --px: 4px;
+  --pixel-notch: polygon(
+    0 var(--px), var(--px) var(--px), var(--px) 0,
+    calc(100% - var(--px)) 0, calc(100% - var(--px)) var(--px), 100% var(--px),
+    100% calc(100% - var(--px)), calc(100% - var(--px)) calc(100% - var(--px)), calc(100% - var(--px)) 100%,
+    var(--px) 100%, var(--px) calc(100% - var(--px)), 0 calc(100% - var(--px))
+  );
+  --pixel-line: color-mix(in srgb, var(--latte-beige) 40%, transparent);
+  --pixel-shadow-color: color-mix(in srgb, #000 42%, transparent);
 }
 
 :root[data-theme="light"] {
@@ -63,6 +77,8 @@
   --accent-foreground: var(--warm-cream);
   --surface-nav: var(--parchment);
   --surface-code: #f1e6d2;
+  --pixel-line: color-mix(in srgb, var(--cafe-wood) 45%, transparent);
+  --pixel-shadow-color: color-mix(in srgb, var(--cafe-wood) 32%, transparent);
 }
 
 :root[data-contrast="high"] {
@@ -155,8 +171,9 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-display), Georgia, serif;
-  letter-spacing: -0.01em;
+  font-family: var(--font-display), ui-monospace, monospace;
+  letter-spacing: 0.01em;
+  line-height: 1.15;
 }
 
 ::selection {
@@ -369,11 +386,69 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ==========================================================================
-   Pixel wordmark — the JavaChip logo lockup: chunky retro-game lettering
-   built from stacked hard-edged (unblurred) text-shadow layers instead of
-   a raster image, so it stays crisp at any size and themes with the rest
-   of the palette. Scales in em units off font-size.
+   Pixel-UI kit — notched "8-bit" corners + hard offset shadows, reused by
+   Card, Button, Badge, Input, and the progress meter so the whole app reads
+   as one cozy pixel-game interface. Body text stays in a normal sans for
+   readability; only the chrome is pixelated.
    ========================================================================== */
+
+/* Notched corners only (no border) — for chips, tags, small fills. */
+.pixel-corners {
+  --px: 4px;
+  clip-path: var(--pixel-notch);
+}
+.pixel-corners-sm {
+  --px: 3px;
+  clip-path: var(--pixel-notch);
+}
+.pixel-corners-lg {
+  --px: 8px;
+  clip-path: var(--pixel-notch);
+}
+
+/* A framed panel: notched corners + a chunky inset border line that follows
+   the notch. The inset box-shadow is clipped to the notched shape, so the
+   border steps at each corner like a pixel sprite. */
+.pixel-panel {
+  --px: 5px;
+  clip-path: var(--pixel-notch);
+  box-shadow: inset 0 0 0 3px var(--pixel-line);
+}
+
+/* Hard, unblurred offset drop-shadow (via filter so it follows clip-path). */
+.pixel-shadow {
+  filter: drop-shadow(4px 4px 0 var(--pixel-shadow-color));
+}
+.pixel-shadow-sm {
+  filter: drop-shadow(3px 3px 0 var(--pixel-shadow-color));
+}
+
+/* A pressable pixel button: notched, chunky inset edge, hard drop-shadow,
+   and a satisfying lift-on-hover / press-down-on-click. The shadow stays put
+   while the key translates, so it reads as a physical button. */
+.pixel-btn {
+  --px: 4px;
+  clip-path: var(--pixel-notch);
+  box-shadow: inset 0 0 0 2px var(--pixel-btn-line, color-mix(in srgb, #000 22%, transparent));
+  filter: drop-shadow(3px 3px 0 var(--pixel-shadow-color));
+  transition: transform 0.12s ease-out;
+}
+.pixel-btn:hover {
+  transform: translateY(-2px);
+}
+.pixel-btn:active {
+  transform: translateY(1px);
+}
+.pixel-btn-light {
+  --pixel-btn-line: color-mix(in srgb, var(--latte-beige) 55%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pixel-btn:hover,
+  .pixel-btn:active {
+    transform: none;
+  }
+}
 
 .pixel-text {
   font-family: var(--font-pixel);

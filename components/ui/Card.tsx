@@ -9,8 +9,7 @@ export function Card({
   return (
     <Tag
       className={cn(
-        "relative rounded-3xl border border-border bg-background-card/90 shadow-lg shadow-black/15 backdrop-blur-sm",
-        "before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:rounded-t-3xl before:bg-gradient-to-r before:from-transparent before:via-warm-cream/15 before:to-transparent",
+        "pixel-panel pixel-shadow relative bg-background-card",
         className
       )}
       {...props}
@@ -27,7 +26,7 @@ export function CardHeader({ className, ...props }: React.HTMLAttributes<HTMLDiv
 export function CardTitle({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) {
   return (
     <h3
-      className={cn("font-display text-xl font-semibold tracking-tight text-foreground", className)}
+      className={cn("font-display text-lg font-semibold text-foreground", className)}
       {...props}
     />
   );

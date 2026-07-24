@@ -27,7 +27,7 @@ export async function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm text-foreground-muted transition-colors hover:text-foreground"
+              className="font-[family-name:var(--font-display)] text-sm text-foreground-muted transition-colors hover:text-amber"
             >
               {link.label}
             </Link>

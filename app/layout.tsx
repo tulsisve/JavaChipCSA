@@ -1,15 +1,18 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Playfair_Display, Inter, JetBrains_Mono, Press_Start_2P } from "next/font/google";
+import { Cormorant_Garamond, Pixelify_Sans, Inter, JetBrains_Mono, Press_Start_2P } from "next/font/google";
 import "./globals.css";
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+// Readable pixel font — used for every heading and UI label so the whole
+// interface reads "pixelated" without hurting legibility. Body copy stays
+// in Inter (loaded below) so long-form reading is still comfortable.
+const pixelify = Pixelify_Sans({
+  variable: "--font-pixelify",
   subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
-  style: ["normal", "italic"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
+// Chunky arcade font, reserved for the logo wordmark and tiny accents only.
 const pixel = Press_Start_2P({
   variable: "--font-pixel",
   subsets: ["latin"],
@@ -63,7 +66,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${cormorant.variable} ${inter.variable} ${jetbrainsMono.variable} ${pixel.variable} h-full antialiased`}
+      className={`${pixelify.variable} ${cormorant.variable} ${inter.variable} ${jetbrainsMono.variable} ${pixel.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
         {children}
